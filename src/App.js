@@ -2,8 +2,23 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+function logException(ex, context) {
+  window.Raven.captureException(ex, {
+    extra: context
+  });
+  /*eslint no-console:0*/
+  window.console && console.error && console.error(ex);
+}
+
+
 class App extends Component {
+  test() {
+    logException(new Error('Hello Sentry 3!'), this);
+  }
+
   render() {
+    this.test();
+
     return (
       <div className="App">
         <div className="App-header">
